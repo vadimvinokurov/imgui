@@ -1,7 +1,8 @@
 project "ImGui"
 	kind "StaticLib"
 	language "C++"
-    staticruntime "off"
+	cppdialect "C++20"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -23,22 +24,27 @@ project "ImGui"
 
 	filter "system:windows"
 		systemversion "latest"
-		cppdialect "C++17"
-
-	filter "system:linux"
-		pic "On"
-		systemversion "latest"
-		cppdialect "C++17"
 
 	filter "configurations:Debug"
+		defines "VE_DEBUG"
 		runtime "Debug"
-		symbols "on"
-
+		optimize "Off"
+		symbols "On"
+		
 	filter "configurations:Release"
+		defines "VE_RELEASE"
 		runtime "Release"
-		optimize "on"
-
-    filter "configurations:Dist"
+		optimize "Speed"
+		symbols "Off"
+		
+	filter "configurations:Profile"
+		defines "VE_PROFILE"
 		runtime "Release"
-		optimize "on"
-        symbols "off"
+		optimize "Speed"
+		symbols "Off"
+	
+	filter "configurations:Retail"
+		defines "VE_RETAIL"
+		runtime "Release"
+		optimize "Speed"
+		symbols "Off"
